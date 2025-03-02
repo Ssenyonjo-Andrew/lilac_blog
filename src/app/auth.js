@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = 5000;
+const PORT = 3000;
 
 // Middleware
 app.use(cors());
@@ -23,7 +23,7 @@ const readUsers = () => {
     return JSON.parse(data);
   } catch (err) {
     console.error('Error reading users.json:', err);
-    return []; // Return an empty array if the file is missing or invalid
+    return [];
   }
 };
 
@@ -36,34 +36,7 @@ const writeUsers = (users) => {
   }
 };
 
-// Login endpoint
-app.post('/api/auth/login', (req, res) => {
-  const { email, password } = req.body;
-
-  // Read users from the JSON file
-  const users = readUsers();
-
-  // Find user by email
-  const user = users.find((u) => u.email === email);
-  if (!user) {
-    return res.status(400).json({ message: 'User not found.' });
-  }
-
-  // Check password
-  const isPasswordValid = bcrypt.compareSync(password, user.password);
-  if (!isPasswordValid) {
-    return res.status(400).json({ message: 'Invalid password.' });
-  }
-
-  // Generate JWT token
-  const token = jwt.sign({ id: user.id, role: user.role }, 'your_jwt_secret_key', {
-    expiresIn: '1h', // Token expires in 1 hour
-  });
-
-  res.json({ token });
-});
-
-// Register endpoint (optional)
+// Register endpoint
 app.post('/api/auth/register', (req, res) => {
   const { email, password, role } = req.body;
 
@@ -92,6 +65,33 @@ app.post('/api/auth/register', (req, res) => {
   writeUsers(users);
 
   res.status(201).json({ message: 'User registered successfully.' });
+});
+
+// Login endpoint
+app.post('/api/auth/login', (req, res) => {
+  const { email, password } = req.body;
+
+  // Read users from the JSON file
+  const users = readUsers();
+
+  // Find user by email
+  const user = users.find((u) => u.email === email);
+  if (!user) {
+    return res.status(400).json({ message: 'User not found.' });
+  }
+
+  // Check password
+  const isPasswordValid = bcrypt.compareSync(password, user.password);
+  if (!isPasswordValid) {
+    return res.status(400).json({ message: 'Invalid password.' });
+  }
+
+  // Generate JWT token
+  const token = jwt.sign({ id: user.id, role: user.role }, 'your_jwt_secret_key', {
+    expiresIn: '1h', // Token expires in 1 hour
+  });
+
+  res.json({ token });
 });
 
 // Start the server

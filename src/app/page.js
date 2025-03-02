@@ -1,22 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './globals.css';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // Check if the user is already logged in
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsLoggedIn(true);
-      window.location.href = '/dashboard'; // Redirect to dashboard if logged in
-    }
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +18,7 @@ const LoginPage = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch('http://localhost:3000/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,13 +42,9 @@ const LoginPage = () => {
     }
   };
 
-  if (isLoggedIn) {
-    return <p>Redirecting to dashboard...</p>;
-  }
-
   return (
     <div className="login-container">
-      <h1>School Management System</h1>
+      <h1>WEBER</h1>
       <h2>Login</h2>
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit}>
