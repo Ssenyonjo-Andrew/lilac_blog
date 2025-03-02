@@ -1,12 +1,22 @@
-"use client"; // Add this line at the top of the file
+"use client";
 
-import React, { useState } from 'react';
-import './globals.css'; // Import the CSS file
+import React, { useState, useEffect } from 'react';
+import './globals.css';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Check if the user is already logged in
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+      window.location.href = '/dashboard'; // Redirect to dashboard if logged in
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,7 +42,7 @@ const LoginPage = () => {
         // Save the token to localStorage
         localStorage.setItem('token', data.token);
         alert('Login successful!');
-        // Redirect to dashboard or another page
+        // Redirect to dashboard
         window.location.href = '/dashboard';
       } else {
         setError(data.message || 'Login failed. Please try again.');
@@ -42,9 +52,13 @@ const LoginPage = () => {
     }
   };
 
+  if (isLoggedIn) {
+    return <p>Redirecting to dashboard...</p>;
+  }
+
   return (
     <div className="login-container">
-      <h1>WEBER</h1>
+      <h1>School Management System</h1>
       <h2>Login</h2>
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit}>
