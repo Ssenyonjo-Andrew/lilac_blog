@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = 2000;
 
 // Middleware
 app.use(cors());
@@ -40,12 +40,26 @@ const writeUsers = (users) => {
 app.post('/api/auth/register', (req, res) => {
   const { email, password, role } = req.body;
 
+  // Log the request body to debug
+  console.log('Request body:', req.body);
+
+  // Validate request body
+  if (!email || !password) {
+    console.error('Email or password is missing');
+    return res.status(400).json({ message: 'Email and password are required.' });
+  }
+
+  // Log the email and password to debug
+  console.log('Email:', email);
+  console.log('Password:', password);
+
   // Read users from the JSON file
   const users = readUsers();
 
   // Check if user already exists
   const existingUser = users.find((u) => u.email === email);
   if (existingUser) {
+    console.error('User already exists');
     return res.status(400).json({ message: 'User already exists.' });
   }
 
@@ -64,6 +78,7 @@ app.post('/api/auth/register', (req, res) => {
   users.push(newUser);
   writeUsers(users);
 
+  console.log('User registered successfully');
   res.status(201).json({ message: 'User registered successfully.' });
 });
 
@@ -71,18 +86,26 @@ app.post('/api/auth/register', (req, res) => {
 app.post('/api/auth/login', (req, res) => {
   const { email, password } = req.body;
 
+  // Validate request body
+  if (!email || !password) {
+    console.error('Email or password is missing');
+    return res.status(400).json({ message: 'Email and password are required.' });
+  }
+
   // Read users from the JSON file
   const users = readUsers();
 
   // Find user by email
   const user = users.find((u) => u.email === email);
   if (!user) {
+    console.error('User not found');
     return res.status(400).json({ message: 'User not found.' });
   }
 
   // Check password
   const isPasswordValid = bcrypt.compareSync(password, user.password);
   if (!isPasswordValid) {
+    console.error('Invalid password');
     return res.status(400).json({ message: 'Invalid password.' });
   }
 
@@ -91,6 +114,7 @@ app.post('/api/auth/login', (req, res) => {
     expiresIn: '1h', // Token expires in 1 hour
   });
 
+  console.log('Login successful');
   res.json({ token });
 });
 
