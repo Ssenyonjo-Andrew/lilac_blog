@@ -4,5 +4,17 @@
     "email": "ande.ssenyonjo@gmail.com",
     "password": "$2b$08$oNFl58zTXfArnfVxgzxWBO2lPboa/MzPwVKvgqD1uE/vYy6qnW1oO",
     "role": "user"
+  },
+  {
+    "id": 2,
+    "email": "amonkim@gmail.com",
+    "password": "$2b$08$S0rRV5qKuj036MPxPtUbZunqBNuZ8yiY05K4/V4lp7iwTn.vWzSde",
+    "role": "user"
+  },
+  {
+    "id": 3,
+    "email": "jadafrancis208@gmail.com",
+    "password": "$2b$08$thEM56fxnn4N7kCRNwwqEOh.TTnrqRkL823vvDmv3U0kYicdcOsJ.",
+    "role": "admin"
   }
 ]

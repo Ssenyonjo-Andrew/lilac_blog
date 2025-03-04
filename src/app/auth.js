@@ -115,7 +115,26 @@ app.post('/api/auth/login', (req, res) => {
   });
 
   console.log('Login successful');
-  res.json({ token });
+
+  // Send response with token and message
+  res.status(200).json({
+    message: 'Login successful',
+    token: token,
+    role: user.role
+  });
+});
+
+// Dashboard endpoints
+app.get('/user-dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'user-dashboard.html'));
+});
+
+app.get('/president-dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'president-dashboard.html'));
+});
+
+app.get('/admin-dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'admin-dashboard.html'));
 });
 
 // Start the server
