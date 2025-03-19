@@ -6,7 +6,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color:rgb(12, 2, 22);
+  background:linear-gradient(Blue,rgb(63, 9, 63),black);
 }
 
 .login-container {
