@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = 2000;
+const PORT = 2001;
 
 // Middleware
 app.use(cors());
@@ -48,10 +48,6 @@ app.post('/api/auth/register', (req, res) => {
     console.error('Email or password is missing');
     return res.status(400).json({ message: 'Email and password are required.' });
   }
-
-  // Log the email and password to debug
-  console.log('Email:', email);
-  console.log('Password:', password);
 
   // Read users from the JSON file
   const users = readUsers();
@@ -116,25 +112,12 @@ app.post('/api/auth/login', (req, res) => {
 
   console.log('Login successful');
 
-  // Send response with token and message
+  // Send response with token and role
   res.status(200).json({
     message: 'Login successful',
     token: token,
     role: user.role
   });
-});
-
-// Dashboard endpoints
-app.get('/user-dashboard', (req, res) => {
-  res.sendFile(path.join(__dirname, 'user-dashboard.html'));
-});
-
-app.get('/president-dashboard', (req, res) => {
-  res.sendFile(path.join(__dirname, 'president-dashboard.html'));
-});
-
-app.get('/admin-dashboard', (req, res) => {
-  res.sendFile(path.join(__dirname, 'admin-dashboard.html'));
 });
 
 // Start the server

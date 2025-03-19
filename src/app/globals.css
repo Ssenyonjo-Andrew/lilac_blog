@@ -81,3 +81,45 @@ body {
 .dashboard-container p {
   color: #0a0404;
 }
+
+.form-group {
+  margin-bottom: 15px;
+  width: 370px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.signup-btn, .login-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.signup-link {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.signup-link a {
+  color: #0070f3; /* Blue color for the link */
+  text-decoration: none;
+}
+
+.signup-link a:hover {
+  text-decoration: underline; /* Underline on hover */
+}

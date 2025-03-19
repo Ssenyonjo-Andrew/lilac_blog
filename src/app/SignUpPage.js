@@ -1,12 +1,11 @@
-"use client";
-
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './globals.css';
 
-const LoginPage = () => {
+function SignUpPage(){
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('user');
   const [error, setError] = useState('');
   const history = useHistory();
 
@@ -20,31 +19,21 @@ const LoginPage = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:2000/api/auth/login', {
+      const response = await fetch('http://localhost:2001/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, role }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        // Save the token to localStorage
-        localStorage.setItem('token', data.token);
-        alert('Login successful!');
-        
-        // Redirect to the appropriate dashboard based on role
-        if (data.role === 'admin') {
-          history.push('/admin-dashboard');
-        } else if (data.role === 'president') {
-          history.push('/president-dashboard');
-        } else {
-          history.push('/user-dashboard');
-        }
+        alert('Sign-up successful!');
+        history.push('/login');
       } else {
-        setError(data.message || 'Login failed. Please try again.');
+        setError(data.message || 'Sign-up failed. Please try again.');
       }
     } catch (err) {
       setError('An error occurred. Please try again.');
@@ -52,9 +41,8 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login-container">
-      <h1>chapter management system</h1>
-      <h2>Login</h2>
+    <div className="signup-container">
+      <h1>Sign Up</h1>
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -75,12 +63,19 @@ const LoginPage = () => {
             placeholder="Enter your password"
           />
         </div>
-        <button type="submit" className="login-btn">
-          Login
+        <div className="form-group">
+          <label>Role:</label>
+          <select value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="user">User</option>
+            <option value="president">President</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <button type="submit" className="signup-btn">
+          Sign Up
         </button>
       </form>
     </div>
   );
 };
 
-export default LoginPage;

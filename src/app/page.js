@@ -1,12 +1,14 @@
-"use client";
+"use client"; // Mark this component as a Client Component
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation'; // Use next/navigation instead of react-router-dom
 import './globals.css';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const router = useRouter(); // Use useRouter from next/navigation
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,7 +20,7 @@ const LoginPage = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:2000/api/auth/login', {
+      const response = await fetch('http://localhost:2001/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -32,8 +34,15 @@ const LoginPage = () => {
         // Save the token to localStorage
         localStorage.setItem('token', data.token);
         alert('Login successful!');
-        // Redirect to dashboard
-        window.location.href = '/dashboard';
+        
+        // Redirect to the appropriate dashboard based on role
+        if (data.role === 'admin') {
+          router.push('/admin-dashboard');
+        } else if (data.role === 'president') {
+          router.push('/president-dashboard');
+        } else {
+          router.push('/user-dashboard');
+        }
       } else {
         setError(data.message || 'Login failed. Please try again.');
       }
@@ -44,7 +53,7 @@ const LoginPage = () => {
 
   return (
     <div className="login-container">
-      <h1>ANDY</h1>
+      <h1>WEBER</h1>
       <h2>Login</h2>
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit}>
@@ -70,6 +79,11 @@ const LoginPage = () => {
           Login
         </button>
       </form>
+
+      {/* Link to the sign-up page */}
+      <p className="signup-link">
+        Don't have an account? <a href="/signup">Sign up here</a>.
+      </p>
     </div>
   );
 };

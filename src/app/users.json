@@ -16,5 +16,29 @@
     "email": "jadafrancis208@gmail.com",
     "password": "$2b$08$thEM56fxnn4N7kCRNwwqEOh.TTnrqRkL823vvDmv3U0kYicdcOsJ.",
     "role": "admin"
+  },
+  {
+    "id": 4,
+    "email": "ande.senyonjo@gmail.com",
+    "password": "$2b$08$jsE/VAiMTzz19NiZcHjDv.lGEMKmcgJI2dMrNlNMQRkRUE/U353Ii",
+    "role": "Admin"
+  },
+  {
+    "id": 5,
+    "email": "wakisa12@gmail.com",
+    "password": "$2b$08$z6zAZdjrm.4dYIRYOHJcfOD4e/1wKXliGTJGVlz4GzvdCKroTuj7G",
+    "role": "admin"
+  },
+  {
+    "id": 6,
+    "email": "wakisa1@gmail.com",
+    "password": "$2b$08$ToHLXPOmg0CEYsEJWF5ihetNP7oDPPOyA2r8fMuUM.8cCsush41iG",
+    "role": "student"
+  },
+  {
+    "id": 7,
+    "email": "wakisa2@gmail.com",
+    "password": "$2b$08$76J/O94F.LCGwGO8Og5Ow.5OZNMAoDLltOGs1Glutk2EFIeIkjqGe",
+    "role": "user"
   }
 ]
